@@ -81,5 +81,12 @@ Gem::Specification.new do |s|
   s.add_dependency 'uuid', '= 2.0.1'
   s.add_dependency 'oauth', '~> 0.3'
   s.add_dependency 'ruby-openid', '~> 2.1'
-  s.add_dependency 'json', '~> 1.1'
+  s.platform       = $platform || RUBY_PLATFORM[/java/] || 'ruby'
+  if s.platform.to_s == 'ruby'
+    puts "Using JSON native"  
+    s.add_dependency 'json', '~> 1.1' 
+  else
+    puts "Using JSON-jruby"  
+    s.add_dependency 'json-jruby', '~> 1.1' if s.platform.to_s == 'java' 
+  end
 end
